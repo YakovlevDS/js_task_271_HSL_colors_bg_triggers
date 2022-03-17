@@ -1,0 +1,168 @@
+* {
+  box-sizing: border-box;
+}
+:root {
+  --accent: hsl(0, 0%, calc((15 + (var(--dark, 0) * 82)) * 1%));
+  --thumb: 48px;
+  --dark-grad: rgba(0,0,0,0.4);
+  --light-grad: rgba(255,255,255,0.4);
+  --border: #404040;
+  --thumb-border: hsl(0, 0%, calc((25 + (var(--dark, 0) * 65)) * 1%));
+}
+body {
+  min-height: 100vh;
+  background: hsl(var(--hue), calc(var(--saturation, 0) * 1%), calc(var(--lightness, 0) * 1%));
+}
+.hsl {
+  color: var(--accent);
+}
+.toast {
+  --toast-bg: hsl(var(--hue), calc(var(--saturation, 0) * 1%), calc((var(--lightness, 0) - 10) * 1%));
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+  -webkit-animation: fadeOut 0.5s 1.5s forwards;
+          animation: fadeOut 0.5s 1.5s forwards;
+  color: var(--accent);
+  background: var(--toast-bg);
+}
+svg {
+  fill: var(--accent);
+}
+.slider-track {
+  position: absolute;
+  top: calc(var(--thumb) * 0.5);
+  left: 50%;
+  transform: translate(-50%, 0);
+  bottom: calc(var(--thumb) * 0.5);
+  border-radius: 8px;
+}
+.slider-track:after {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(90deg, var(--light-grad), var(--dark-grad));
+  border-radius: 10px;
+  border: 2px solid var(--border);
+}
+.slider-track:before {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 40px;
+  top: 50%;
+  left: 50%;
+  height: calc(100% + 20px);
+  transform: translate(-50%, -50%);
+  background: linear-gradient(90deg, var(--dark-grad), var(--light-grad));
+  z-index: -1;
+  border-radius: 20px;
+}
+.slider-track--hue:after {
+  background: linear-gradient(90deg, var(--light-grad), var(--dark-grad)), linear-gradient(0deg, #f00, #ffa500, #ff0, #008000, #4b0082, #00f, #ee82ee);
+}
+.slider-track--saturation:after {
+  --base: hsl(var(--hue), 0%, 50%);
+  --saturated: hsl(var(--hue), 100%, 50%);
+  background: linear-gradient(90deg, var(--light-grad), var(--dark-grad)), linear-gradient(0deg, var(--base), var(--saturated));
+}
+.slider-track--lightness:after {
+  --current: hsl(var(--hue), calc(var(--saturation, 0) * 1%), 50%);
+  background: linear-gradient(90deg, var(--light-grad), var(--dark-grad)), linear-gradient(0deg, #000, var(--current), #fff);
+}
+input[type="range"] {
+  --height: 48px;
+  -moz-appearance: none;
+       appearance: none;
+  -webkit-appearance: none;
+  outline: transparent;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  cursor: -webkit-grab;
+  cursor: grab;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  overflow: visible;
+  background: transparent;
+}
+input[type="range"]:active {
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: var(--thumb);
+  height: var(--thumb);
+  border-radius: 50%;
+  border: 4px solid var(--thumb-border);
+}
+input[type="range"]::-moz-range-thumb {
+  box-sizing: border-box;
+  width: var(--thumb);
+  height: var(--thumb);
+  border-radius: 50%;
+  border: 4px solid var(--thumb-border);
+}
+#hue {
+  --current-color: hsl(var(--hue, 0), 100%, 50%);
+}
+#hue:active::-webkit-slider-thumb {
+  background: linear-gradient(0deg, var(--light-grad), var(--dark-grad)), var(--current-color);
+}
+#hue:active::-moz-range-thumb {
+  background: linear-gradient(0deg, var(--light-grad), var(--dark-grad)), var(--current-color);
+}
+#hue::-webkit-slider-thumb {
+  background: linear-gradient(0deg, var(--dark-grad), var(--light-grad)), var(--current-color);
+}
+#hue::-moz-range-thumb {
+  background: linear-gradient(0deg, var(--dark-grad), var(--light-grad)), var(--current-color);
+}
+#saturation {
+  --current-color: hsl(var(--hue), 100%, 50%);
+  --desaturated: hsl(var(--hue), 0%, 50%);
+  --saturated: hsl(var(--hue), calc(var(--saturation, 0) * 1%), 50%);
+}
+#saturation:active::-webkit-slider-thumb {
+  background: linear-gradient(0deg, var(--light-grad), var(--dark-grad)), var(--saturated);
+}
+#saturation:active::-moz-range-thumb {
+  background: linear-gradient(0deg, var(--light-grad), var(--dark-grad)), var(--saturated);
+}
+#saturation::-webkit-slider-thumb {
+  background: linear-gradient(0deg, var(--dark-grad), var(--light-grad)), var(--saturated);
+}
+#saturation::-moz-range-thumb {
+  background: linear-gradient(0deg, var(--dark-grad), var(--light-grad)), var(--saturated);
+}
+#lightness {
+  --current-color: hsl(var(--hue), calc(var(--saturation, 0) * 1%), calc(var(--lightness, 0) * 1%));
+}
+#lightness:active::-webkit-slider-thumb {
+  background: linear-gradient(0deg, var(--light-grad), var(--dark-grad)), var(--current-color);
+}
+#lightness:active::-moz-range-thumb {
+  background: linear-gradient(0deg, var(--light-grad), var(--dark-grad)), var(--current-color);
+}
+#lightness::-webkit-slider-thumb {
+  background: linear-gradient(0deg, var(--dark-grad), var(--light-grad)), var(--current-color);
+}
+#lightness::-moz-range-thumb {
+  background: linear-gradient(0deg, var(--dark-grad), var(--light-grad)), var(--current-color);
+}
+@-webkit-keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
